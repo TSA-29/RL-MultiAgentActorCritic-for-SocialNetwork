@@ -1,0 +1,75 @@
+{
+  "environment": {
+    "num_nodes": 20,
+    "max_steps": 100,
+    "confidence_bound": 0.7,
+    "consensus_threshold": 0.95,
+    "community_update_freq": 20,
+    "attachment_edges": 2,
+    "community_temperature": 0.35,
+    "action_scale": 1.0,
+    "intervention_interval": 1,
+    "hold_last_action": true,
+    "terminal_bonus": 1.0,
+    "step_penalty": 0.01,
+    "action_penalty_coef": 0.01,
+    "bridge_penalty_coef": 0.25,
+    "self_belief": 1.0
+  },
+  "model": {
+    "encoder": {
+      "gnn_hidden_dims": [128, 128],
+      "graph_hidden_dims": [128],
+      "graph_embedding_dim": 128,
+      "activation": "relu",
+      "dropout": 0.0,
+      "layer_norm": true,
+      "add_self_loops": true,
+      "step_count_scale": 100.0
+    },
+    "actor": {
+      "edge_hidden_dims": [128, 64],
+      "activation": "relu",
+      "dropout": 0.0,
+      "layer_norm": true
+    },
+    "critic": {
+      "edge_hidden_dims": [128, 64],
+      "value_hidden_dims": [256, 128],
+      "activation": "relu",
+      "dropout": 0.0,
+      "layer_norm": true
+    }
+  },
+  "training": {
+    "episodes": 150,
+    "batch_size": 32,
+    "learning_starts": 1800,
+    "update_every": 20,
+    "log_every": 1,
+    "eval_every": 10,
+    "gamma": 0.99,
+    "tau": 0.002,
+    "actor_lr": 5.0e-5,
+    "critic_lr": 1.0e-5,
+    "entropy_coef": 0.02,
+    "init_log_std": -1.0,
+    "min_log_std": -5.0,
+    "max_log_std": 0.5,
+    "gradient_clip_norm": 0.5,
+    "replay_capacity": 100000,
+    "policy_epsilon": 1e-6,
+    "community_detector": "louvain",
+    "device": "cuda",
+    "seed": 7,
+    "train_seeds": [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    "checkpoint_dir": "artifacts/checkpoints",
+    "checkpoint_prefix": "maac",
+    "deterministic_actions": false
+  },
+  "evaluation": {
+    "benchmark_seeds": [101, 102, 103, 104, 105],
+    "deterministic_policy": false,
+    "policy_seed": 0
+  }
+}
